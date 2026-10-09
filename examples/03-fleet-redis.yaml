@@ -1,0 +1,33 @@
+# Fleet sync through redis_storage. Auto mode uses atomic increments when the
+# storage client supports them, else G-Counter blobs per node.
+receivers:
+  otlp:
+    protocols:
+      grpc: { endpoint: 0.0.0.0:4317 }
+processors:
+  memory_limiter: { check_interval: 1s, limit_mib: 512, spike_limit_mib: 128 }
+  budget: { ledger: budget }
+exporters:
+  debug: { verbosity: basic, sending_queue: { batch: { flush_timeout: 1s } } }
+extensions:
+  redis_storage/budget:
+    endpoint: redis.observability:6379
+    expiration: 960h
+    tls: { insecure: true }
+  budget:
+    prices: { hot: { logs_gb: 0.40, traces_gb: 0.30 } }
+    budgets: [{ name: default, match: default, budget: 100 }]
+    tiers: [{ threshold: 1.0, actions: { drop_below_severity: INFO } }]
+    sync:
+      mode: storage
+      storage:
+        extension: redis_storage/budget
+        mode: auto
+        node_id: ${env:POD_NAME}
+        node_prefix: otelcol-gw
+        max_nodes: 32
+service:
+  extensions: [redis_storage/budget, budget]
+  pipelines:
+    logs:   { receivers: [otlp], processors: [memory_limiter, budget], exporters: [debug] }
+    traces: { receivers: [otlp], processors: [memory_limiter, budget], exporters: [debug] }

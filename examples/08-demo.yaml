@@ -1,0 +1,31 @@
+# Demo timing: a one hour period with minute scale windows.
+# The debug exporter prints each resource with its otelcol.budget.key and
+# otelcol.budget.tier stamps, and the Collector's own metrics show the budget
+# state: curl -s localhost:8888/metrics | grep otelcol_budget_
+receivers:
+  otlp:
+    protocols:
+      grpc: { endpoint: 0.0.0.0:4317 }
+processors:
+  memory_limiter: { check_interval: 1s, limit_mib: 512, spike_limit_mib: 128 }
+  budget: { ledger: budget }
+exporters:
+  debug: { verbosity: normal, sending_queue: { batch: { flush_timeout: 1s } } }
+extensions:
+  budget:
+    period: 1h
+    prices: { hot: { logs_gb: 0.40, traces_gb: 0.30 } }
+    windows: { short: 1m, long: 6m }
+    decision_interval: 5s
+    hysteresis: { ratio: 0.8, min_dwell: 3m }
+    stale_after: 1m
+    fail_open_after: 5m
+    budgets: [{ name: default, match: default, budget: 1.0 }]
+    tiers:
+      - { threshold: 1.0, actions: { drop_below_severity: INFO } }
+      - { threshold: 2.0, actions: { drop_below_severity: WARN, sample_ratio: 0.25 } }
+service:
+  extensions: [budget]
+  pipelines:
+    logs:   { receivers: [otlp], processors: [memory_limiter, budget], exporters: [debug] }
+    traces: { receivers: [otlp], processors: [memory_limiter, budget], exporters: [debug] }

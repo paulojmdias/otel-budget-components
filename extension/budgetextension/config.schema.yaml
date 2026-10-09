@@ -1,0 +1,281 @@
+$defs:
+  actions_config:
+    description: ActionsConfig are the actions of a tier.
+    type: object
+    properties:
+      divert:
+        description: Divert stamps otelcol.budget.divert = true so the routing connector can send the data to a cold pipeline. Only the last tier may divert.
+        type: boolean
+      drop_below_severity:
+        description: DropBelowSeverity drops log records below TRACE, DEBUG, INFO, WARN, ERROR, or FATAL. Records without a severity count as INFO.
+        type: string
+      drop_metrics:
+        description: DropMetrics drops metrics whose name matches any of these globs.
+        type: array
+        items:
+          type: string
+      sample_ratio:
+        description: 'SampleRatio keeps this fraction of logs and traces, consistently by trace ID. In (0, 1]. Default: 1.0.'
+        type: number
+        x-customType: float64
+  always_pass_config:
+    description: AlwaysPassConfig is the never drop policy.
+    type: object
+    properties:
+      log_severity:
+        description: 'LogSeverity: log records at or above it are never dropped. Default: ERROR.'
+        type: string
+      span_status_error:
+        description: 'SpanStatusError: spans with status ERROR are never dropped. Default: true.'
+        type: boolean
+  budget_rule:
+    description: BudgetRule assigns a budget to keys.
+    type: object
+    properties:
+      budget:
+        description: Budget is the amount per period in the configured currency. Must be > 0.
+        type: number
+        x-customType: float64
+      match:
+        description: 'Match selects the keys of the rule: a key glob, resource attributes, or the string "default".'
+        $ref: match
+      name:
+        description: Name of the rule, unique. Group ledger IDs are "group:<name>".
+        type: string
+      scope:
+        description: 'Scope is "key" (every matching key gets its own budget) or "group" (matching keys share one budget). Default: key.'
+        type: string
+  compression_config:
+    description: CompressionConfig multiplies bytes before pricing, per signal.
+    type: object
+    properties:
+      logs:
+        description: 'Logs ratio. Default: 1.0.'
+        type: number
+        x-customType: float64
+      metrics:
+        description: 'Metrics ratio. Default: 1.0.'
+        type: number
+        x-customType: float64
+      traces:
+        description: 'Traces ratio. Default: 1.0.'
+        type: number
+        x-customType: float64
+  hysteresis_config:
+    description: HysteresisConfig controls de-escalation.
+    type: object
+    properties:
+      min_dwell:
+        description: 'MinDwell is how long the condition must hold continuously. Default: 30m.'
+        x-customType: time.duration
+      ratio:
+        description: 'Ratio: a key drops one tier only while burn_long < threshold * ratio. In (0, 1). Default: 0.8.'
+        type: number
+        x-customType: float64
+  local_sync_config:
+    description: LocalSyncConfig configures checkpoints for local and share mode.
+    type: object
+    properties:
+      checkpoint_interval:
+        description: 'CheckpointInterval between checkpoints. Default: 30s.'
+        x-customType: time.duration
+      storage:
+        description: Storage is an optional storage extension for checkpoints, restored on start.
+        x-pointer: true
+        x-customType: go.opentelemetry.io/collector/component.id
+  match:
+    description: 'Match selects keys: a key glob, resource attributes, or the literal string "default".'
+    type: object
+    properties:
+      attribute:
+        description: Attribute requires every listed resource attribute to equal its value.
+        type: object
+        additionalProperties:
+          type: string
+      key:
+        description: Key is a glob matched against the budget key.
+        type: string
+  price_list:
+    description: PriceList holds prices in currency per unit.
+    type: object
+    properties:
+      logs_gb:
+        description: LogsGB is the price per GB (1e9 bytes) of logs.
+        type: number
+        x-customType: float64
+      metrics_million_points:
+        description: MetricsMillionPoints is the price per million metric data points.
+        type: number
+        x-customType: float64
+      series_hour:
+        description: SeriesHour is the price per active series per hour.
+        type: number
+        x-customType: float64
+      traces_gb:
+        description: TracesGB is the price per GB (1e9 bytes) of traces.
+        type: number
+        x-customType: float64
+      traces_million_spans:
+        description: TracesMillionSpans is the price per million spans. When > 0 it is used instead of TracesGB.
+        type: number
+        x-customType: float64
+  prices_config:
+    description: PricesConfig holds hot and optional cold prices.
+    type: object
+    properties:
+      cold:
+        description: Cold prices apply to diverted data. Required when a tier diverts.
+        x-optional: true
+        $ref: price_list
+      hot:
+        description: Hot prices apply to data exported normally.
+        $ref: price_list
+  share_sync_config:
+    description: ShareSyncConfig configures share mode.
+    type: object
+    properties:
+      replicas:
+        description: 'Replicas is N: each replica enforces budget / N.'
+        type: integer
+      replicas_env:
+        description: ReplicasEnv names an environment variable holding N, used when Replicas is not set.
+        type: string
+  storage_sync_config:
+    description: StorageSyncConfig configures storage mode.
+    type: object
+    properties:
+      extension:
+        description: Extension is the storage extension ID, for example redis_storage/budget. Required in storage mode.
+        x-pointer: true
+        x-customType: go.opentelemetry.io/collector/component.id
+      flush_interval:
+        description: 'FlushInterval between pushes of local spend. Default: 5s.'
+        x-customType: time.duration
+      max_nodes:
+        description: 'MaxNodes is the number of replica slots read. Default: 32.'
+        type: integer
+      max_pending_keys:
+        description: 'MaxPendingKeys bounds ledger IDs with unflushed spend; overflow is counted and dropped. Default: 10000.'
+        type: integer
+      mode:
+        description: 'Mode is "auto" (increment when the storage client supports BatchIncrementBy, else gcounter), "increment", or "gcounter". Default: auto.'
+        type: string
+      node_id:
+        description: NodeID identifies this replica, for example ${env:POD_NAME}. Required in storage mode.
+        type: string
+      node_prefix:
+        description: 'NodePrefix: replicas are read as <node_prefix>-0 .. <node_prefix>-<max_nodes-1>, so NodeID must be one of those names. Required in storage mode.'
+        type: string
+      read_interval:
+        description: 'ReadInterval between reads of fleet spend. Default: 30s.'
+        x-customType: time.duration
+  sync_config:
+    description: SyncConfig selects how spend is shared.
+    type: object
+    properties:
+      local:
+        description: Local configures local and share mode checkpoints.
+        $ref: local_sync_config
+      mode:
+        description: 'Mode is "local", "share", or "storage". Default: local.'
+        type: string
+      share:
+        description: Share configures share mode.
+        $ref: share_sync_config
+      storage:
+        description: Storage configures storage mode.
+        $ref: storage_sync_config
+  telemetry_config:
+    description: TelemetryConfig bounds self telemetry cardinality.
+    type: object
+    properties:
+      max_keys:
+        description: 'MaxKeys: per key series only for the top keys by spend, the rest aggregate under key="__other__". Default: 100.'
+        type: integer
+  tier_config:
+    description: TierConfig is one enforcement level.
+    type: object
+    properties:
+      actions:
+        description: Actions applied at this tier.
+        $ref: actions_config
+      threshold:
+        description: Threshold is the burn rate at which this tier applies, reached on both windows. Must be > 0.
+        type: number
+        x-customType: float64
+  windows_config:
+    description: WindowsConfig are the burn rate windows.
+    type: object
+    properties:
+      long:
+        description: 'Long window. Must be greater than Short and at most the period (monthly counts as 28 days). Default: 6h.'
+        x-customType: time.duration
+      short:
+        description: 'Short window. Default: 1h.'
+        x-customType: time.duration
+description: Config is the budget extension configuration.
+type: object
+properties:
+  always_pass:
+    description: AlwaysPass is the never drop policy applied by the processor.
+    $ref: always_pass_config
+  budgets:
+    description: Budgets are the ordered budget rules. Required; the last one must be the default rule.
+    type: array
+    items:
+      $ref: budget_rule
+  compression_ratio:
+    description: 'CompressionRatio multiplies bytes before pricing, per signal. Default: 1.0 for every signal.'
+    $ref: compression_config
+  decision_interval:
+    description: 'DecisionInterval is how often decisions are recomputed and published. Default: 10s.'
+    x-customType: time.duration
+  exempt:
+    description: Exempt lists budget keys, or group ledger IDs as "group:<rule name>", that are accounted but never enforced.
+    type: array
+    items:
+      type: string
+  fail_open_after:
+    description: 'FailOpenAfter is the sync data age after which every key is at tier 0 and the extension reports unhealthy. Must be greater than StaleAfter. Default: 30m.'
+    x-customType: time.duration
+  hard_cap:
+    description: 'HardCap selects what happens when period to date spend reaches the budget: "highest" (at least the highest tier without divert), "divert" (at least the divert tier), or "off". Default: highest.'
+    type: string
+  hysteresis:
+    description: Hysteresis controls de-escalation.
+    $ref: hysteresis_config
+  key_attributes:
+    description: 'KeyAttributes are the resource attributes joined with "|" to form the budget key. A missing attribute becomes "unknown"; when all are missing the key is "default". Default: [service.name].'
+    type: array
+    items:
+      type: string
+  max_keys:
+    description: 'MaxKeys is the number of distinct keys per period. New keys beyond it fold into "__other__" for the rest of the period. Default: 10000.'
+    type: integer
+  period:
+    description: 'Period is the budget window: "monthly" (calendar month, UTC) or a Go duration such as "1h". Default: monthly.'
+    type: string
+  prices:
+    description: Prices per signal, for the hot and the cold price class.
+    $ref: prices_config
+  stale_after:
+    description: 'StaleAfter is the sync data age after which escalation is frozen. Default: 5m.'
+    x-customType: time.duration
+  sync:
+    description: Sync selects how spend is shared across Collector replicas.
+    $ref: sync_config
+  telemetry:
+    description: Telemetry bounds the cardinality of self telemetry.
+    $ref: telemetry_config
+  tiers:
+    description: Tiers are the enforcement levels, 1 to 5 entries with strictly increasing thresholds. Required.
+    type: array
+    items:
+      $ref: tier_config
+  warmup_coverage:
+    description: 'WarmupCoverage is the fraction of the short window that must be covered by samples before a key can escalate. Default: 0.8.'
+    type: number
+    x-customType: float64
+  windows:
+    description: 'Windows are the short and long burn rate windows. Default: short 1h, long 6h.'
+    $ref: windows_config

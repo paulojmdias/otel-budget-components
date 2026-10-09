@@ -1,0 +1,49 @@
+# OCB manifest for the otelcol-budget distribution. Build with `make build`.
+# Local paths are relative to the repository root, where make runs the builder.
+dist:
+  module: github.com/paulojmdias/otel-budget-processor/cmd/otelcol-budget/dist
+  name: otelcol-budget
+  description: OpenTelemetry Collector with budget aware telemetry components
+  output_path: ./bin/otelcol-budget
+  version: 0.1.0
+
+extensions:
+  - gomod: github.com/paulojmdias/otel-budget-processor/extension/budgetextension v0.0.0
+    path: ./extension/budgetextension
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/storage/redisstorageextension v0.162.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/storage/filestorage v0.162.0
+
+receivers:
+  - gomod: go.opentelemetry.io/collector/receiver/otlpreceiver v0.162.0
+
+processors:
+  - gomod: github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor v0.0.0
+    path: ./processor/budgetprocessor
+  - gomod: go.opentelemetry.io/collector/processor/memorylimiterprocessor v0.162.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/k8sattributesprocessor v1.1.0
+
+exporters:
+  - gomod: go.opentelemetry.io/collector/exporter/debugexporter v0.162.0
+  - gomod: go.opentelemetry.io/collector/exporter/otlphttpexporter v0.162.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/fileexporter v0.162.0
+
+connectors:
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/connector/routingconnector v0.162.0
+
+providers:
+  - gomod: go.opentelemetry.io/collector/confmap/provider/envprovider v1.68.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/fileprovider v1.68.0
+  - gomod: go.opentelemetry.io/collector/confmap/provider/yamlprovider v1.68.0
+
+telemetry:
+  gomod: go.opentelemetry.io/collector/service v0.162.0
+  import: go.opentelemetry.io/collector/service/telemetry/otelconftelemetry
+
+# redis_storage with atomic increments (BatchIncrementBy), from
+# https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/51568
+# (branch feat/extension_redis_atomic_incr, commit e9a5c2f). With it the budget
+# extension's storage sync uses increment mode; without it, G-Counter. Drop this
+# once the PR is in a contrib release. `make build REDIS_FORK=<target>` swaps
+# the target for another commit or a local path.
+replaces:
+  - github.com/open-telemetry/opentelemetry-collector-contrib/extension/storage/redisstorageextension => github.com/paulojmdias/opentelemetry-collector-contrib/extension/storage/redisstorageextension v0.0.0-20261001220713-e9a5c2f2236a

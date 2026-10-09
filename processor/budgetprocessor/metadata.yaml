@@ -1,0 +1,15 @@
+type: budget
+github_project: paulojmdias/otel-budget-processor
+display_name: Budget Processor
+description: Applies budget decisions from the budget extension to logs, traces, and metrics.
+
+status:
+  class: processor
+  stability:
+    development: [logs, traces, metrics]
+  disable_codecov_badge: true
+
+tests:
+  config:
+    ledger: budget
+  skip_lifecycle: true
