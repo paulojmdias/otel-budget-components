@@ -10,7 +10,7 @@ import (
 
 var (
 	Type      = component.MustNewType("budget")
-	ScopeName = "github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor"
+	ScopeName = "github.com/paulojmdias/otel-budget-components/processor/budgetprocessor"
 )
 
 const (

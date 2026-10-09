@@ -18,8 +18,8 @@ import (
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/extension/extensiontest"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/clock"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/testutil"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/clock"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/testutil"
 )
 
 // Redis load per replica per sync cycle (one flush and one read), increment

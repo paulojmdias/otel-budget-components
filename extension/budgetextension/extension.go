@@ -1,4 +1,4 @@
-package budgetextension // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension"
+package budgetextension // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension"
 
 import (
 	"context"
@@ -17,15 +17,15 @@ import (
 	"go.opentelemetry.io/otel/metric"
 	"go.uber.org/zap"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/clock"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/costmodel"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/decision"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/keying"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/ledger"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/metadata"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/seriescount"
-	spendsync "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/sync"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/clock"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/costmodel"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/decision"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/keying"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/ledger"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/metadata"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/seriescount"
+	spendsync "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/sync"
 )
 
 var (

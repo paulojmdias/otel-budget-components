@@ -1,6 +1,6 @@
 // Package seriescount estimates active series per key per hour with a lock
 // free HyperLogLog.
-package seriescount // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/seriescount"
+package seriescount // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/seriescount"
 
 import (
 	"math"

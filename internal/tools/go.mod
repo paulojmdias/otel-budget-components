@@ -1,4 +1,4 @@
-module github.com/paulojmdias/otel-budget-processor/internal/tools
+module github.com/paulojmdias/otel-budget-components/internal/tools
 
 go 1.26.0
 

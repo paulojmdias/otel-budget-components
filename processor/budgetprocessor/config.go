@@ -1,11 +1,11 @@
-package budgetprocessor // import "github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor"
+package budgetprocessor // import "github.com/paulojmdias/otel-budget-components/processor/budgetprocessor"
 
 import (
 	"errors"
 
 	"go.opentelemetry.io/collector/component"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 )
 
 // Config is the budget processor configuration.

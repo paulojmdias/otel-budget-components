@@ -1,4 +1,4 @@
-package budgetextension // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension"
+package budgetextension // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension"
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/extension"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/metadata"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/metadata"
 )
 
 // NewFactory returns the budget extension factory.

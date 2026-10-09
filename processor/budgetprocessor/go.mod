@@ -1,4 +1,4 @@
-module github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor
+module github.com/paulojmdias/otel-budget-components/processor/budgetprocessor
 
 go 1.26.0
 
@@ -40,7 +40,7 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee // indirect
-	github.com/paulojmdias/otel-budget-processor/extension/budgetextension v0.0.0
+	github.com/paulojmdias/otel-budget-components/extension/budgetextension v0.0.0
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/collector/component/componentstatus v0.162.0 // indirect
 	go.opentelemetry.io/collector/consumer/xconsumer v0.162.0 // indirect
@@ -56,4 +56,4 @@ require (
 	golang.org/x/sys v0.48.0 // indirect
 )
 
-replace github.com/paulojmdias/otel-budget-processor/extension/budgetextension => ../../extension/budgetextension
+replace github.com/paulojmdias/otel-budget-components/extension/budgetextension => ../../extension/budgetextension

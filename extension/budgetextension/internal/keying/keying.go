@@ -1,6 +1,6 @@
 // Package keying turns resource attributes into budget keys and matches keys
 // against budget rules.
-package keying // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/keying"
+package keying // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/keying"
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ import (
 	"github.com/gobwas/glob"
 	"go.opentelemetry.io/collector/pdata/pcommon"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 )
 
 const (

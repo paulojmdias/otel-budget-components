@@ -1,11 +1,11 @@
 // Package costmodel prices usage in integer micro units. Pure functions only.
-package costmodel // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/costmodel"
+package costmodel // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/costmodel"
 
 import (
 	"math"
 	"math/bits"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 )
 
 const (

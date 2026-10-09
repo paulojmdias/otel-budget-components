@@ -142,18 +142,18 @@ make build REDIS_FORK=/path/to/opentelemetry-collector-contrib/extension/storage
 
 The components are Go modules:
 
-- `github.com/paulojmdias/otel-budget-processor/extension/budgetextension`
-- `github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor`
+- `github.com/paulojmdias/otel-budget-components/extension/budgetextension`
+- `github.com/paulojmdias/otel-budget-components/processor/budgetprocessor`
 
 They are not tagged yet, so they cannot be fetched by version. Until they are, build from this repository, or point your OCB manifest at a local clone:
 
 ```yaml
 extensions:
-  - gomod: github.com/paulojmdias/otel-budget-processor/extension/budgetextension v0.0.0
-    path: /path/to/otel-budget-processor/extension/budgetextension
+  - gomod: github.com/paulojmdias/otel-budget-components/extension/budgetextension v0.0.0
+    path: /path/to/otel-budget-components/extension/budgetextension
 processors:
-  - gomod: github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor v0.0.0
-    path: /path/to/otel-budget-processor/processor/budgetprocessor
+  - gomod: github.com/paulojmdias/otel-budget-components/processor/budgetprocessor v0.0.0
+    path: /path/to/otel-budget-components/processor/budgetprocessor
 ```
 
 Once tagged (`extension/budgetextension/vX.Y.Z` and `processor/budgetprocessor/vX.Y.Z`), drop the `path:` lines and use the version. Add the `replaces:` line from [builder-config.yaml](cmd/otelcol-budget/builder-config.yaml) if you want increment mode with Redis.

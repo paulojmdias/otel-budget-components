@@ -1,4 +1,4 @@
-package spendsync // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/sync"
+package spendsync // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/sync"
 
 import (
 	"context"

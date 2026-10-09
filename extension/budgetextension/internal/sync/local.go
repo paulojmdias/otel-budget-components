@@ -1,4 +1,4 @@
-package spendsync // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/sync"
+package spendsync // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/sync"
 
 import (
 	"context"
@@ -10,8 +10,8 @@ import (
 	"go.opentelemetry.io/collector/extension/xextension/storage"
 	"go.uber.org/zap"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/ledger"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/ledger"
 )
 
 // LocalConfig configures local and share modes.

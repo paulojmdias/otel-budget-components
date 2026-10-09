@@ -1,4 +1,4 @@
-package budgetextension // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension"
+package budgetextension // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension"
 
 import (
 	"errors"
@@ -12,12 +12,12 @@ import (
 	"go.opentelemetry.io/collector/config/configoptional"
 	semconv "go.opentelemetry.io/otel/semconv/v1.40.0"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/costmodel"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/decision"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/keying"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/ledger"
-	spendsync "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/sync"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/costmodel"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/decision"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/keying"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/ledger"
+	spendsync "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/sync"
 )
 
 // Config is the budget extension configuration.

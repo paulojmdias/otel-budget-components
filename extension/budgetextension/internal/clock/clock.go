@@ -1,6 +1,6 @@
 // Package clock provides an injectable clock so time driven logic is testable
 // without sleeping.
-package clock // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/clock"
+package clock // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/clock"
 
 import (
 	"sync"

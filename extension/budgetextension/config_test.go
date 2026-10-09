@@ -12,9 +12,9 @@ import (
 	"go.opentelemetry.io/collector/confmap"
 	"go.opentelemetry.io/collector/confmap/confmaptest"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/decision"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/ledger"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/metadata"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/decision"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/ledger"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/metadata"
 )
 
 func loadConfig(t *testing.T, name string) (*Config, error) {

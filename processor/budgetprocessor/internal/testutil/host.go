@@ -1,6 +1,6 @@
 // Package testutil holds processor test helpers: a fake ledger, a host,
 // and pdata fixtures.
-package testutil // import "github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor/internal/testutil"
+package testutil // import "github.com/paulojmdias/otel-budget-components/processor/budgetprocessor/internal/testutil"
 
 import "go.opentelemetry.io/collector/component"
 
