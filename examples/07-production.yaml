@@ -1,0 +1,41 @@
+# Production shaped settings: three tiers, divert at the hard cap, hysteresis.
+receivers:
+  otlp:
+    protocols:
+      grpc: { endpoint: 0.0.0.0:4317 }
+processors:
+  memory_limiter: { check_interval: 1s, limit_mib: 1024, spike_limit_mib: 256 }
+  budget: { ledger: budget, fail_open: true }
+  budget/cold: { ledger: budget, price_class: cold, enforce: false }
+exporters:
+  otlp_http/loki: { endpoint: http://loki:3100/otlp, sending_queue: { batch: { flush_timeout: 1s } } }
+  file/cold: { path: /var/lib/otelcol/cold/logs.jsonl }
+connectors:
+  routing:
+    default_pipelines: [logs/hot]
+    table:
+      - context: resource
+        condition: attributes["otelcol.budget.divert"] == true
+        pipelines: [logs/cold]
+extensions:
+  budget:
+    period: monthly
+    prices:
+      hot:  { logs_gb: 0.40, traces_gb: 0.30 }
+      cold: { logs_gb: 0.02, traces_gb: 0.02 }
+    budgets: [{ name: default, match: default, budget: 1000 }]
+    windows: { short: 1h, long: 6h }
+    tiers:
+      - { threshold: 1.0, actions: { drop_below_severity: INFO } }
+      - { threshold: 1.5, actions: { drop_below_severity: WARN, sample_ratio: 0.25 } }
+      - { threshold: 3.0, actions: { divert: true } }
+    hard_cap: divert
+    hysteresis: { ratio: 0.8, min_dwell: 30m }
+    stale_after: 5m
+    fail_open_after: 30m
+service:
+  extensions: [budget]
+  pipelines:
+    logs/in:   { receivers: [otlp], processors: [memory_limiter, budget], exporters: [routing] }
+    logs/hot:  { receivers: [routing], exporters: [otlp_http/loki] }
+    logs/cold: { receivers: [routing], processors: [budget/cold], exporters: [file/cold] }

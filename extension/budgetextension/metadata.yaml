@@ -1,0 +1,197 @@
+type: budget
+github_project: paulojmdias/otel-budget-processor
+display_name: Budget Extension
+description: Owns per key telemetry spend budgets, burn rate decisions, and fleet sync for the budget processor.
+status:
+  class: extension
+  stability:
+    development:
+    - extension
+  disable_codecov_badge: true
+attributes:
+  key:
+    name_override: otelcol.budget.key
+    description: Budget key or ledger ID (top keys by spend, the rest aggregate under __other__).
+    type: string
+  mode:
+    name_override: otelcol.budget.sync.mode
+    description: Sync mode.
+    type: string
+    enum:
+    - local
+    - share
+    - storage
+  op:
+    name_override: otelcol.budget.sync.operation
+    description: Sync operation that failed.
+    type: string
+    enum:
+    - restore
+    - checkpoint
+    - flush
+    - flush_index
+    - read
+    - write_tiers
+    - read_tiers
+    - storage_reset
+    - pending_overflow
+  price_class:
+    name_override: otelcol.budget.price_class
+    description: Price class the usage was accounted at.
+    type: string
+    enum:
+    - hot
+    - cold
+  reason:
+    name_override: otelcol.budget.drop.reason
+    description: Why items were dropped.
+    type: string
+    enum:
+    - severity
+    - sample
+    - metric_glob
+  signal:
+    name_override: otelcol.signal
+    description: Telemetry signal.
+    type: string
+    enum:
+    - logs
+    - traces
+    - metrics
+  window:
+    name_override: otelcol.budget.window
+    description: Burn rate window. offered_long is the long window burn of offered usage, before any action.
+    type: string
+    enum:
+    - short
+    - long
+    - offered_long
+tests:
+  config:
+    budgets:
+    - name: default
+      match: default
+      budget: 100
+    tiers:
+    - threshold: 1.0
+      actions:
+        drop_below_severity: INFO
+    prices:
+      hot:
+        logs_gb: 0.4
+telemetry:
+  metrics:
+    budget_burn_rate:
+      enabled: true
+      stability: development
+      description: Burn rate per window, 1.0 is the sustainable pace.
+      unit: '1'
+      gauge:
+        value_type: double
+      attributes:
+      - key
+      - window
+    budget_dropped_items:
+      enabled: true
+      stability: development
+      description: Items (log records, spans, data points) dropped by the budget processor.
+      unit: '{item}'
+      sum:
+        value_type: int
+        monotonic: true
+      attributes:
+      - key
+      - signal
+      - reason
+    budget_exempt:
+      enabled: true
+      stability: development
+      description: 1 when the key is listed in exempt (accounted, never enforced).
+      unit: '1'
+      gauge:
+        value_type: int
+      attributes:
+      - key
+    budget_fleet_spend:
+      enabled: true
+      stability: development
+      description: Period to date spend of the whole fleet as seen by this replica, in micro units of the configured currency. Equal on every replica once synced.
+      unit: '{microcurrency}'
+      gauge:
+        value_type: int
+      attributes:
+      - key
+    budget_key_overflows:
+      enabled: true
+      stability: development
+      description: Resources folded into __other__ because max_keys was reached.
+      unit: '{resource}'
+      sum:
+        value_type: int
+        monotonic: true
+    budget_keys:
+      enabled: true
+      stability: development
+      description: Distinct budget keys seen this period.
+      unit: '{key}'
+      gauge:
+        value_type: int
+    budget_limit:
+      enabled: true
+      stability: development
+      description: Period budget in micro units of the configured currency.
+      unit: '{microcurrency}'
+      gauge:
+        value_type: int
+      attributes:
+      - key
+    budget_offered_size:
+      enabled: true
+      stability: development
+      description: Bytes offered to the budget processor before enforcement.
+      unit: By
+      sum:
+        value_type: int
+        monotonic: true
+      attributes:
+      - key
+      - signal
+    budget_spend:
+      enabled: true
+      stability: development
+      description: Accounted spend in micro units of the configured currency.
+      unit: '{microcurrency}'
+      sum:
+        value_type: int
+        monotonic: true
+      attributes:
+      - key
+      - signal
+      - price_class
+    budget_sync_age:
+      enabled: true
+      stability: development
+      description: Age of the fleet totals used for decisions.
+      unit: s
+      gauge:
+        value_type: double
+    budget_sync_errors:
+      enabled: true
+      stability: development
+      description: Sync errors by mode and operation.
+      unit: '{error}'
+      sum:
+        value_type: int
+        monotonic: true
+      attributes:
+      - mode
+      - op
+    budget_tier:
+      enabled: true
+      stability: development
+      description: Current enforcement tier.
+      unit: '{tier}'
+      gauge:
+        value_type: int
+      attributes:
+      - key

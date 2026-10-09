@@ -1,0 +1,25 @@
+budget:
+  key_attributes: [tenant.id, service.name]
+  max_keys: 5000
+  period: monthly
+  prices:
+    hot: { logs_gb: 0.40, traces_gb: 0.30, metrics_million_points: 0.10, series_hour: 0.00001 }
+    cold: { logs_gb: 0.02 }
+  compression_ratio: { logs: 0.5, traces: 1.0, metrics: 1.0 }
+  budgets:
+    - { name: checkout, match: { key: "*|checkout" }, budget: 800 }
+    - { name: payments-team, match: { attribute: { k8s.pod.label.team: payments } }, scope: group, budget: 3000 }
+    - { name: default, match: default, budget: 100 }
+  windows: { short: 30m, long: 3h }
+  decision_interval: 15s
+  tiers:
+    - { threshold: 1.0, actions: { drop_below_severity: INFO, sample_ratio: 0.5, drop_metrics: ["go_*"] } }
+    - { threshold: 2.0, actions: { divert: true } }
+  hard_cap: divert
+  hysteresis: { ratio: 0.7, min_dwell: 10m }
+  exempt: [checkout, "group:payments-team"]
+  sync:
+    mode: storage
+    storage: { extension: redis_storage/budget, mode: gcounter, node_id: gw-0, node_prefix: gw }
+budget/badmatch:
+  budgets: [{ name: default, match: everything, budget: 1 }]

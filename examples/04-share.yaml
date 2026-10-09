@@ -1,0 +1,20 @@
+# Share mode: each replica enforces budget / N, N from an env var.
+receivers:
+  otlp:
+    protocols:
+      grpc: { endpoint: 0.0.0.0:4317 }
+processors:
+  memory_limiter: { check_interval: 1s, limit_mib: 512, spike_limit_mib: 128 }
+  budget: { ledger: budget }
+exporters:
+  debug: { verbosity: basic, sending_queue: { batch: { flush_timeout: 1s } } }
+extensions:
+  budget:
+    prices: { hot: { logs_gb: 0.40 } }
+    budgets: [{ name: default, match: default, budget: 100 }]
+    tiers: [{ threshold: 1.0, actions: { drop_below_severity: INFO } }]
+    sync: { mode: share, share: { replicas_env: GATEWAY_REPLICAS } }
+service:
+  extensions: [budget]
+  pipelines:
+    logs: { receivers: [otlp], processors: [memory_limiter, budget], exporters: [debug] }

@@ -1,0 +1,15 @@
+description: Config is the budget processor configuration.
+type: object
+properties:
+  enforce:
+    description: 'Enforce applies tier actions. With false the processor only accounts usage and stamps resources. Default: true.'
+    type: boolean
+  fail_open:
+    description: 'FailOpen treats a missing or unhealthy budget extension as tier 0. With false, a missing extension fails startup. Default: true.'
+    type: boolean
+  ledger:
+    description: 'Ledger is the component ID of the budget extension that owns the budgets. Default: budget.'
+    x-customType: go.opentelemetry.io/collector/component.id
+  price_class:
+    description: 'PriceClass is the price list usage is accounted at: "hot", or "cold" for the processor in a cold (diverted) pipeline. Default: hot.'
+    type: string

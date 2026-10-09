@@ -1,0 +1,34 @@
+# Keys per tenant and service, a key rule for checkout, a shared team budget from
+# a Kubernetes label, and a small budget for keys beyond max_keys.
+receivers:
+  otlp:
+    protocols:
+      grpc: { endpoint: 0.0.0.0:4317 }
+processors:
+  memory_limiter: { check_interval: 1s, limit_mib: 512, spike_limit_mib: 128 }
+  k8sattributes:
+    extract:
+      labels: [{ tag_name: k8s.pod.label.team, key: team, from: pod }]
+  budget: { ledger: budget }
+exporters:
+  debug: { verbosity: basic, sending_queue: { batch: { flush_timeout: 1s } } }
+extensions:
+  budget:
+    key_attributes: [tenant.id, service.name]
+    max_keys: 5000
+    prices: { hot: { logs_gb: 0.40, traces_gb: 0.30, metrics_million_points: 0.10 } }
+    budgets:
+      - { name: checkout, match: { key: "*|checkout" }, budget: 800 }
+      - { name: payments-team, match: { attribute: { k8s.pod.label.team: payments } }, scope: group, budget: 3000 }
+      - { name: other, match: { key: "__other__" }, budget: 50 }
+      - { name: default, match: default, budget: 100 }
+    # accounted, never enforced
+    exempt: [platform|ingress, "group:payments-team"]
+    tiers:
+      - { threshold: 1.0, actions: { drop_below_severity: INFO, sample_ratio: 0.5 } }
+service:
+  extensions: [budget]
+  pipelines:
+    logs:    { receivers: [otlp], processors: [memory_limiter, k8sattributes, budget], exporters: [debug] }
+    traces:  { receivers: [otlp], processors: [memory_limiter, k8sattributes, budget], exporters: [debug] }
+    metrics: { receivers: [otlp], processors: [memory_limiter, k8sattributes, budget], exporters: [debug] }
