@@ -8,7 +8,7 @@ import (
 	"go.opentelemetry.io/collector/pdata/plog"
 	"go.opentelemetry.io/collector/pdata/pmetric"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 )
 
 // driver plays the processor side of the budgetapi contract, so the

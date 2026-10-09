@@ -1,7 +1,7 @@
 // Package testutil holds extension test helpers: a miniredis backed storage
 // client with atomic increments, a storage extension and host, and pdata
 // fixtures.
-package testutil // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/testutil"
+package testutil // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/testutil"
 
 import (
 	"context"

@@ -1,4 +1,4 @@
-package budgetprocessor // import "github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor"
+package budgetprocessor // import "github.com/paulojmdias/otel-budget-components/processor/budgetprocessor"
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"go.opentelemetry.io/collector/pdata/plog"
 	"go.uber.org/zap"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 )
 
 // Resource attributes stamped by the processor.

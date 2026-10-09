@@ -7,8 +7,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/costmodel"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/costmodel"
 )
 
 func TestCounterCarry(t *testing.T) {

@@ -1,4 +1,4 @@
-module github.com/paulojmdias/otel-budget-processor
+module github.com/paulojmdias/otel-budget-components
 
 go 1.26.0
 
@@ -124,8 +124,8 @@ require (
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/openshift/api v0.0.0-20251015095338-264e80a2b6e7 // indirect
 	github.com/openshift/client-go v0.0.0-20251015124057-db0dee36e235 // indirect
-	github.com/paulojmdias/otel-budget-processor/extension/budgetextension v0.0.0
-	github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor v0.0.0
+	github.com/paulojmdias/otel-budget-components/extension/budgetextension v0.0.0
+	github.com/paulojmdias/otel-budget-components/processor/budgetprocessor v0.0.0
 	github.com/pierrec/lz4/v4 v4.1.30 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
@@ -250,6 +250,6 @@ require (
 	sigs.k8s.io/yaml v1.6.0 // indirect
 )
 
-replace github.com/paulojmdias/otel-budget-processor/extension/budgetextension => ./extension/budgetextension
+replace github.com/paulojmdias/otel-budget-components/extension/budgetextension => ./extension/budgetextension
 
-replace github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor => ./processor/budgetprocessor
+replace github.com/paulojmdias/otel-budget-components/processor/budgetprocessor => ./processor/budgetprocessor

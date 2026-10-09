@@ -16,11 +16,11 @@ import (
 	"go.opentelemetry.io/collector/pdata/pcommon"
 	"go.opentelemetry.io/collector/pdata/plog"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/clock"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/costmodel"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/metadatatest"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/testutil"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/clock"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/costmodel"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/metadatatest"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/testutil"
 )
 
 // Measurements for docs/results.md: `make results`.

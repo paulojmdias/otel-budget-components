@@ -176,8 +176,8 @@ func TestDocSnippets(t *testing.T) {
 			case strings.Contains(sn.body, "gomod:"):
 				// an OCB manifest fragment: the referenced local modules must exist
 				for _, l := range asMapList(doc) {
-					if p, ok := l["gomod"].(string); ok && strings.HasPrefix(p, "github.com/paulojmdias/otel-budget-processor/") {
-						dir := strings.Fields(strings.TrimPrefix(p, "github.com/paulojmdias/otel-budget-processor/"))[0]
+					if p, ok := l["gomod"].(string); ok && strings.HasPrefix(p, "github.com/paulojmdias/otel-budget-components/") {
+						dir := strings.Fields(strings.TrimPrefix(p, "github.com/paulojmdias/otel-budget-components/"))[0]
 						_, err := os.Stat(filepath.Join("..", dir, "go.mod"))
 						require.NoError(t, err, "module %s does not exist", dir)
 					}

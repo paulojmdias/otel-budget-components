@@ -1,6 +1,6 @@
 // Package ledger holds lock free spend counters, period math, and the burn
 // rate ring buffers.
-package ledger // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/ledger"
+package ledger // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/ledger"
 
 import (
 	"strconv"
@@ -8,8 +8,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/costmodel"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/costmodel"
 )
 
 // Spend is spend in micro units per signal and price class.

@@ -1,6 +1,6 @@
 // Package spendsync shares spend across Collector replicas. Modes: local,
 // share, and storage (atomic increment or G-Counter over storage.Client).
-package spendsync // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/sync"
+package spendsync // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/sync"
 
 import (
 	"context"
@@ -14,9 +14,9 @@ import (
 	"go.opentelemetry.io/collector/extension/xextension/storage"
 	"go.uber.org/zap"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/clock"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/ledger"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/clock"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/ledger"
 )
 
 // Modes.

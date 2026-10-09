@@ -1,5 +1,5 @@
 type: budget
-github_project: paulojmdias/otel-budget-processor
+github_project: paulojmdias/otel-budget-components
 display_name: Budget Extension
 description: Owns per key telemetry spend budgets, burn rate decisions, and fleet sync for the budget processor.
 status:

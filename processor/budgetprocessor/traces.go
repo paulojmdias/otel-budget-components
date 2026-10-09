@@ -1,4 +1,4 @@
-package budgetprocessor // import "github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor"
+package budgetprocessor // import "github.com/paulojmdias/otel-budget-components/processor/budgetprocessor"
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"go.opentelemetry.io/collector/pdata/ptrace"
 	"go.opentelemetry.io/collector/processor/processorhelper"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 )
 
 var traceSizer ptrace.ProtoMarshaler

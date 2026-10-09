@@ -1,14 +1,14 @@
 # OCB manifest for the otelcol-budget distribution. Build with `make build`.
 # Local paths are relative to the repository root, where make runs the builder.
 dist:
-  module: github.com/paulojmdias/otel-budget-processor/cmd/otelcol-budget/dist
+  module: github.com/paulojmdias/otel-budget-components/cmd/otelcol-budget/dist
   name: otelcol-budget
   description: OpenTelemetry Collector with budget aware telemetry components
   output_path: ./bin/otelcol-budget
   version: 0.1.0
 
 extensions:
-  - gomod: github.com/paulojmdias/otel-budget-processor/extension/budgetextension v0.0.0
+  - gomod: github.com/paulojmdias/otel-budget-components/extension/budgetextension v0.0.0
     path: ./extension/budgetextension
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/storage/redisstorageextension v0.162.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/extension/storage/filestorage v0.162.0
@@ -17,7 +17,7 @@ receivers:
   - gomod: go.opentelemetry.io/collector/receiver/otlpreceiver v0.162.0
 
 processors:
-  - gomod: github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor v0.0.0
+  - gomod: github.com/paulojmdias/otel-budget-components/processor/budgetprocessor v0.0.0
     path: ./processor/budgetprocessor
   - gomod: go.opentelemetry.io/collector/processor/memorylimiterprocessor v0.162.0
   - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/processor/k8sattributesprocessor v1.1.0

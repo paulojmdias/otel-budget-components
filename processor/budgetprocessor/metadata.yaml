@@ -1,5 +1,5 @@
 type: budget
-github_project: paulojmdias/otel-budget-processor
+github_project: paulojmdias/otel-budget-components
 display_name: Budget Processor
 description: Applies budget decisions from the budget extension to logs, traces, and metrics.
 

@@ -8,8 +8,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.opentelemetry.io/collector/pdata/plog"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/clock"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/clock"
 )
 
 const (

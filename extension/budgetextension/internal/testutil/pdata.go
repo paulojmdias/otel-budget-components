@@ -1,4 +1,4 @@
-package testutil // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/testutil"
+package testutil // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/testutil"
 
 import (
 	"encoding/binary"

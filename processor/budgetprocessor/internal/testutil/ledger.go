@@ -1,4 +1,4 @@
-package testutil // import "github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor/internal/testutil"
+package testutil // import "github.com/paulojmdias/otel-budget-components/processor/budgetprocessor/internal/testutil"
 
 import (
 	"sync"
@@ -7,7 +7,7 @@ import (
 	"go.opentelemetry.io/collector/pdata/pcommon"
 	semconv "go.opentelemetry.io/otel/semconv/v1.40.0"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 )
 
 // RecordCall is one Record or RecordOffered call.

@@ -17,12 +17,12 @@ import (
 	"go.opentelemetry.io/collector/pdata/pmetric"
 	"go.opentelemetry.io/otel/sdk/metric/metricdata"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/clock"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/costmodel"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/decision"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/metadatatest"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/testutil"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/clock"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/costmodel"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/decision"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/metadatatest"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/testutil"
 )
 
 var (

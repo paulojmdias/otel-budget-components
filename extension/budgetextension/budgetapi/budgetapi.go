@@ -1,6 +1,6 @@
 // Package budgetapi is the contract between the budget extension, which owns
 // all state, and the budget processor, which applies decisions in pipelines.
-package budgetapi // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+package budgetapi // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 
 import (
 	"fmt"

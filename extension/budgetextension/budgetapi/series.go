@@ -1,4 +1,4 @@
-package budgetapi // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
+package budgetapi // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
 
 import (
 	"encoding/binary"

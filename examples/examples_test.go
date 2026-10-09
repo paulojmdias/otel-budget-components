@@ -23,8 +23,8 @@ import (
 	"go.opentelemetry.io/collector/receiver/otlpreceiver"
 	"go.opentelemetry.io/collector/service/telemetry/otelconftelemetry"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension"
-	"github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension"
+	"github.com/paulojmdias/otel-budget-components/processor/budgetprocessor"
 )
 
 // factories mirrors the OCB manifest in cmd/otelcol-budget.

@@ -1,4 +1,4 @@
-package budgetprocessor // import "github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor"
+package budgetprocessor // import "github.com/paulojmdias/otel-budget-components/processor/budgetprocessor"
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"go.opentelemetry.io/collector/processor"
 	"go.opentelemetry.io/collector/processor/processorhelper"
 
-	"github.com/paulojmdias/otel-budget-processor/processor/budgetprocessor/internal/metadata"
+	"github.com/paulojmdias/otel-budget-components/processor/budgetprocessor/internal/metadata"
 )
 
 var capabilities = processorhelper.WithCapabilities(consumer.Capabilities{MutatesData: true})

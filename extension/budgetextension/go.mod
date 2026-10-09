@@ -1,4 +1,4 @@
-module github.com/paulojmdias/otel-budget-processor/extension/budgetextension
+module github.com/paulojmdias/otel-budget-components/extension/budgetextension
 
 go 1.26.0
 

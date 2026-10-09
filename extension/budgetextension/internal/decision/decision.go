@@ -1,12 +1,12 @@
 // Package decision computes burn rates and tiers per ledger ID. It is driven
 // by the extension's background loop and is not concurrency safe.
-package decision // import "github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/decision"
+package decision // import "github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/decision"
 
 import (
 	"time"
 
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/budgetapi"
-	"github.com/paulojmdias/otel-budget-processor/extension/budgetextension/internal/ledger"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/budgetapi"
+	"github.com/paulojmdias/otel-budget-components/extension/budgetextension/internal/ledger"
 )
 
 // HardCap selects what happens when period to date spend reaches the budget.
